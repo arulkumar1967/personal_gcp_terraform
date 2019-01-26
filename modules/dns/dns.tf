@@ -13,5 +13,5 @@ resource "google_dns_record_set" "gitlab_instance" {
     # TODO: This is really hard to read. I'd like to revisit at some point to clean it up.
     # But we shouldn't need two variables to specify DNS name
     managed_zone = "${google_dns_managed_zone.test.name}"
-    rrdatas = ["${google_compute_instance.gitlab-ce.network_interface.0.access_config.0.assigned_nat_ip}"]
+    rrdatas = ["${module.mygitlab.address}"]
 }
