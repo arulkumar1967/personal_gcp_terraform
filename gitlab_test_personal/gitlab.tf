@@ -1,5 +1,5 @@
 module "mygitlab" {
-  source = "../gitlab_mod_off_replica"
+  source = "../gitlab_mod_rep"
   auth_file = "C:\\Users\\AKANDASAMY\\key.json"
   project = "terraformpoc-229221"
   region = "europe-west2"
