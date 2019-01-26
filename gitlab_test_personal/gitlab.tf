@@ -1,3 +1,11 @@
+terraform {
+  backend "gcs" {
+    bucket = "arul_terraform_states"
+    prefix = "gitlab"
+    credentials = "/home/jayanthiarulkumar98/key.json"
+  }
+}
+
 module "mygitlab" {
   source = "../modules/gitlab_mod_rep"
   auth_file = "/home/jayanthiarulkumar98/key.json"
@@ -5,8 +13,6 @@ module "mygitlab" {
   region = "europe-west2"
   zone = "europe-west2-c"
   data_volume = "gitlab-disk"
-  dns_name = "gitlabpoc.example.com"
-  dns_zone = "gitlabpoc.example"
   runner_count = 2
   prefix = ""
   initial_root_password = "K00uYFxohPBIdMLMDqEX"
@@ -14,12 +20,14 @@ module "mygitlab" {
   runner_host = "http://londonuk.etouch.net."
 }
 
-terraform {
-  backend "gcs" {
-    bucket = "arul_terraform_states"
-    prefix = "gitlab"
-    credentials = "/home/jayanthiarulkumar98/key.json"
-  }
+module "mydns" {
+  source = "../modules/dns"
+  auth_file = "/home/jayanthiarulkumar98/key.json"
+  project = "terraformpoc-229221"
+  region = "europe-west2"
+  zone = "europe-west2-c"
+  dns_name = "gitlabpoc.example.com"
+  dns_zone = "gitlabpoc.example"
 }
 
 output "gitlab-ce-service-account" {
