@@ -40,10 +40,10 @@ output "gitlab-ci-runner-service-account" {
     value = "${module.mygitlab.gitlab-ci-runner_email}"
 }
 
-#output "gitlab-ci-runner-host" {
-#    value = "${module.mygitlab.runner_host}"
-#}
-
-output "address" {
-    value = "${module.mygitlab.address}"
+output "gitlab-ci-runner-host" {
+    value = "${module.mygitlab.runner_host}"
 }
+
+#output "address" {
+#    value = "${module.mygitlab.address}"
+#}
