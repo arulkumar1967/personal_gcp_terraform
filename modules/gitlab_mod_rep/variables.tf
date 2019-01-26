@@ -126,3 +126,7 @@ variable "runner_machine_type" {
     description = "A machine type for your compute instance, used by GitLab CI Runner"
     default = "n1-standard-2"
 }
+
+variable "dns_name" {
+    description = "The DNS name of the GitLab instance."
+}

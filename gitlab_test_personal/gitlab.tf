@@ -6,6 +6,21 @@ terraform {
   }
 }
 
+module "mygitlab" {
+  source = "../modules/gitlab_mod_rep"
+  auth_file = "/home/jayanthiarulkumar98/key.json"
+  project = "terraformpoc-229221"
+  region = "europe-west2"
+  zone = "europe-west2-c"
+  data_volume = "gitlab-disk"
+  dns_name = "gitlabpoc.example.com"
+  runner_count = 2
+  prefix = ""
+  initial_root_password = "K00uYFxohPBIdMLMDqEX"
+  runner_token = "Nur19iz5KCG2ZzWW6_tr"
+  runner_host = "http://londonuk.etouch.net."
+}
+
 module "mydns" {
   source = "../modules/dns"
   auth_file = "/home/jayanthiarulkumar98/key.json"
@@ -16,19 +31,6 @@ module "mydns" {
   dns_zone = "gitlabpoc.example"
 }
 
-module "mygitlab" {
-  source = "../modules/gitlab_mod_rep"
-  auth_file = "/home/jayanthiarulkumar98/key.json"
-  project = "terraformpoc-229221"
-  region = "europe-west2"
-  zone = "europe-west2-c"
-  data_volume = "gitlab-disk"
-  runner_count = 2
-  prefix = ""
-  initial_root_password = "K00uYFxohPBIdMLMDqEX"
-  runner_token = "Nur19iz5KCG2ZzWW6_tr"
-  runner_host = "http://londonuk.etouch.net."
-}
 
 output "gitlab-ce-service-account" {
     value = "${module.mygitlab.gitlab-ce_email}"
