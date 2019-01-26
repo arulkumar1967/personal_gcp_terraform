@@ -1,6 +1,6 @@
 module "mygitlab" {
   source = "../modules/gitlab_mod_rep"
-  auth_file = "C:\\Users\\AKANDASAMY\\key.json"
+  auth_file = "/home/jayanthiarulkumar98/key.json"
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
@@ -17,7 +17,7 @@ terraform {
   backend "gcs" {
     bucket = "arul_terraform_states"
     prefix = "gitlab"
-    credentials = "C:\\Users\\AKANDASAMY\\key.json"
+    credentials = "/home/jayanthiarulkumar98/key.json"
   }
 }
 
