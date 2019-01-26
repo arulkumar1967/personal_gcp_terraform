@@ -6,6 +6,7 @@ module "mygitlab" {
   zone = "europe-west2-c"
   data_volume = "gitlab-disk"
   dns_name = "gitlabpoc.example.com"
+  dns_zone = "gitlabpoc.example"
   runner_count = 2
   prefix = ""
   initial_root_password = "K00uYFxohPBIdMLMDqEX"

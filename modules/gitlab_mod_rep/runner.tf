@@ -3,16 +3,16 @@ resource "google_service_account" "gitlab-ci-runner" {
     display_name = "gitlab-ci-runner"
 }
 
-#data "template_file" "runner_host" {
-#    template = "$${runner_host == "GENERATE" ? generated_host : runner_host}"
-#    vars {
-#      runner_host = "${var.runner_host}"
-#      generated_host = "http${var.ssl_certificate != "/dev/null" ? "s" : ""}://${var.dns_name}"
-#    }
-#}
+data "template_file" "runner_host" {
+    template = "$${runner_host == "GENERATE" ? generated_host : runner_host}"
+    vars {
+      runner_host = "${var.runner_host}"
+      generated_host = "http${var.ssl_certificate != "/dev/null" ? "s" : ""}://${var.dns_name}"
+    }
+}
 
 resource "google_compute_instance" "gitlab-ci-runner" {
-    #count = "${var.runner_count}"
+    count = "${var.runner_count}"
     name = "${var.prefix}gitlab-ci-runner-vm"
     machine_type = "${var.runner_machine_type}"
     zone = "${var.zone}"

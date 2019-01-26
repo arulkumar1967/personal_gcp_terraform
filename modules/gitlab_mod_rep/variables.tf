@@ -66,15 +66,6 @@ variable "instance_name" {
 #    description = "Configuration file to use for /etc/gitlab/gitlab.rb"
 #}
 
-variable "dns_name" {
-    description = "The DNS name of the GitLab instance."
-}
-
-variable "dns_zone" {
-    description = "The name of the DNS zone in Google Cloud that the DNS name should go under"
-    default = "londonuk-zone"
-}
-
 variable "project" {
     description = "The project in Google Cloud to create the GitLab instance under"
 }

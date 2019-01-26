@@ -74,7 +74,7 @@ resource "google_compute_instance" "gitlab-ce" {
         inline = [
             "cat /tmp/gitlab.rb.append >> /tmp/gitlab.rb",
             "chmod +x /tmp/bootstrap",
-            "sudo /tmp/bootstrap ${var.dns_name}"
+            "sudo /tmp/bootstrap ${module.dns.dns_name}"
         ]
     }
 }
