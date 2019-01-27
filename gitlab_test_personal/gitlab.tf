@@ -1,10 +1,3 @@
-module "gitlab_service_account" {  
-  source = "../modules/service-account"
-  project_id = "terraformpoc-229221"
-  prefix = "test"
-  service_name = "gitlab-instance"
-}
-
 module "gitlab_network" {
     source = "../modules/network"
     prefix = "test"
@@ -23,6 +16,7 @@ module "gitlab_server" {
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
+  instance_name = "gitlab_server"
   data_volume = "gitlab-disk"
   dns_name = "gitlabpoc.example.com"
   runner_count = 2
@@ -39,6 +33,7 @@ module "gitlab_runner" {
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
+  instance_name = "gitlab_runner"
   data_volume = "gitlab-disk"
   dns_name = "gitlabpoc.example.com"
   runner_count = 2
@@ -62,9 +57,9 @@ module "mydns" {
   //{google_compute_instance.gitlab-ce.network_interface.0.access_config.0.assigned_nat_ip
 }
 
-output "gitlab-ce-service-account" {
-    value = "${module.gitlab_service_account.gcp_service_account.vaule}"
-}
+#output "gitlab-ce-service-account" {
+#    value = "${module.gitlab_service_account.gcp_service_account.vaule}"
+#}
 
 output "address" {
     value = "${module.gitlab_server.gitlab_server_instance.address}"

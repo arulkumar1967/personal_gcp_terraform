@@ -17,6 +17,39 @@ module "gitlab_instance" {
   runner_host = "${var.runner_host}"
   instance_name = "${var.instance_name}"
   service_account_email = "${var.service_account_email}"
+    provisioner "file" {
+        content = "${data.template_file.gitlab.rendered}"
+        destination = "/tmp/gitlab.rb.append"
+    }
+
+    provisioner "file" {
+        source = "${path.module}/templates/gitlab.rb.append"
+        destination = "/tmp/gitlab.rb"
+    }
+
+    provisioner "file" {
+        source = "${path.module}/bootstrap"
+        destination = "/tmp/bootstrap"
+    }
+
+    provisioner "file" {
+        source = "${var.ssl_key}"
+        destination = "/tmp/ssl_key"
+    }
+
+    provisioner "file" {
+        source = "${var.ssl_certificate}"
+        destination = "/tmp/ssl_certificate"
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "cat /tmp/gitlab.rb.append >> /tmp/gitlab.rb",
+            "chmod +x /tmp/bootstrap",
+            "sudo /tmp/bootstrap ${var.dns_name}"
+        ]
+    }  
+
 }
 
 

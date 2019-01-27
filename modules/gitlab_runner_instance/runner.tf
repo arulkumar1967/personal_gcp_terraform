@@ -15,4 +15,25 @@ module "gitlab_runner" {
   runner_host = "${var.runner_host}"
   instance_name = "${var.instance_name}"
   service_account_email = "${var.service_account_email}"
+
+  provisioner "file" {
+      source = "${path.module}/bootstrap_runner"
+      destination = "/tmp/bootstrap_runner"
+  }
+
+  provisioner "remote-exec" {
+      inline = [
+          "chmod +x /tmp/bootstrap_runner",
+          "sudo /tmp/bootstrap_runner ${var.instance_name} ${var.runner_host} ${var.runner_token} ${var.runner_image}}"
+      ]
+  }
+
+  provisioner "remote-exec" {
+    when = "destroy"
+    inline = [
+      "sudo gitlab-ci-multi-runner unregister --name ${var.instance_name}"
+    ]
+
+  }
+
 }

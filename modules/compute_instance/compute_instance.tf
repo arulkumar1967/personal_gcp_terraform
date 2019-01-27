@@ -27,7 +27,7 @@ resource "google_compute_instance" "compute_instance" {
     network_interface {
         network = "${var.network}"
         access_config {
-            nat_ip = "${google_compute_address.external_ip.address}"
+           // nat_ip = "${google_compute_address.external_ip.address}"
         }
     }
 
@@ -36,41 +36,7 @@ resource "google_compute_instance" "compute_instance" {
     }
 
     service_account {       
-        email = "${google_service_account.gitlab-ce.email}"
+        email = "$var.service_account_email}"
         scopes = ["cloud-platform"]
-    }
-
-    provisioner "file" {
-        content = "${data.template_file.gitlab.rendered}"
-        destination = "/tmp/gitlab.rb.append"
-    }
-
-    provisioner "file" {
-        source = "${path.module}/templates/gitlab.rb.append"
-        destination = "/tmp/gitlab.rb"
-    }
-
-    provisioner "file" {
-        source = "${path.module}/bootstrap"
-        destination = "/tmp/bootstrap"
-    }
-
-    provisioner "file" {
-        source = "${var.ssl_key}"
-        destination = "/tmp/ssl_key"
-    }
-
-    provisioner "file" {
-        source = "${var.ssl_certificate}"
-        destination = "/tmp/ssl_certificate"
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-            "cat /tmp/gitlab.rb.append >> /tmp/gitlab.rb",
-            "chmod +x /tmp/bootstrap",
-            "sudo /tmp/bootstrap ${var.dns_name}"
-        ]
-    }  
-
+    }    
 }
