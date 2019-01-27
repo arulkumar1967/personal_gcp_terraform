@@ -19,7 +19,7 @@ module "gitlab_network" {
 }
 
 module "gitlab_server" {
-  source = "../modules/gitlab_server"
+  source = "../modules/gitlab_server_instance"
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
@@ -35,7 +35,7 @@ module "gitlab_server" {
 }
 
 module "gitlab_runner" {
-  source = "../modules/gitlab_runner"
+  source = "../modules/gitlab_runner_instance"
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
@@ -62,20 +62,12 @@ module "mydns" {
   //{google_compute_instance.gitlab-ce.network_interface.0.access_config.0.assigned_nat_ip
 }
 
-data "template_file" "runner_host" {
-    template = "${runner_host == "GENERATE" ? generated_host : runner_host}"
-    vars {
-      runner_host = "${var.runner_host}"
-      generated_host = "http${var.ssl_certificate != "/dev/null" ? "s" : ""}://${var.dns_name}"
-    }
-}
-
 output "gitlab-ce-service-account" {
     value = "${module.service_account.gcp_service_account.vaule}"
 }
 
 output "address" {
-    value = "${module.gitlab_server.gitlab_server.address}"
+    value = "${module.gitlab_server.gitlab_server_instance.address}"
 }
 
 output "runner_host" {
