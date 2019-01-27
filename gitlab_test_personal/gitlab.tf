@@ -63,7 +63,7 @@ module "mydns" {
 }
 
 output "gitlab-ce-service-account" {
-    value = "${module.service_account.gcp_service_account.vaule}"
+    value = "${module.gitlab_service_account.gcp_service_account.vaule}"
 }
 
 output "address" {
@@ -71,5 +71,7 @@ output "address" {
 }
 
 output "runner_host" {
-    value = "${data.template_file.runner_host.rendered}"
+    value = "${module.gitlab_server.runner_host}"
 }
+
+

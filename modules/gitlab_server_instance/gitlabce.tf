@@ -8,7 +8,7 @@ module "gitlab_instance" {
   project = "${var.project}"
   region = "${var.region}"
   zone = "${var.zone}"
-  data_volume = "${var.dns_volume}"
+  data_volume = "${var.data_volume}"
   dns_name = "${var.dns_name}"
   runner_count = "${var.runner_count}"
   prefix = "${var.prefix}"
