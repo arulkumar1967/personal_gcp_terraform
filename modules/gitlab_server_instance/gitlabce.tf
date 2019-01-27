@@ -94,10 +94,10 @@ data "template_file" "gitlab" {
 }
 
 data "template_file" "runner_host" {
-    template = "${runner_host == "GENERATE" ? generated_host : runner_host}"
+    template = "$${runner_host == "GENERATE" ? generated_host : runner_host}"
     vars {
       runner_host = "${var.runner_host}"
       #generated_host = "http${var.ssl_certificate != "/dev/null" ? "s" : ""}://${var.dns_name}"
-       generated_host = "http://${google_compute_instance.compute_instance.internal_ip}"
+      generated_host = "http://${google_compute_instance.compute_instance.internal_ip}"
     }
 }
