@@ -1,11 +1,3 @@
-terraform {
-  backend "gcs" {
-    bucket = "arul_terraform_states"
-    prefix = "gitlab"
-    credentials = "/home/jayanthiarulkumar98/key.json"
-  }
-}
-
 module "gitlab_service_account" {  
   source = "../modules/service-account"
   project_id = "terraformpoc-229221"

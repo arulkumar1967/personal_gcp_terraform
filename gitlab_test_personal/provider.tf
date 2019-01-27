@@ -1,6 +1,6 @@
 provider "google" {
-    credentials = "${file("${var.auth_file}")}"
-    project = "${var.project}"
-    region = "${var.region}"
+    credentials = "/home/jayanthiarulkumar98/key.json"
+    project = "terraformpoc-229221"
+    region = "europe-west2"
 }
 
