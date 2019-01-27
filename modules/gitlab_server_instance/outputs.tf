@@ -5,3 +5,7 @@
  output "runner_host" {
     value = "${data.template_file.runner_host.rendered}"
 }
+
+output "internal_ip" {
+  value = "${google_compute_instance.compute_instance.network_interface.0.address}"
+}

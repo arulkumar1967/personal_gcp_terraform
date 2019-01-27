@@ -61,12 +61,17 @@ module "mydns" {
 #    value = "${module.gitlab_service_account.gcp_service_account.vaule}"
 #}
 
-output "address" {
+output "gitlab_server_external_ip" {
     value = "${module.gitlab_server.address}"
 }
 
 output "runner_host" {
     value = "${module.gitlab_server.runner_host}"
 }
+
+output "gitlab_server_internal_ip" {
+  value = "module.gitlab_server.internal_ip"
+}
+
 
 
