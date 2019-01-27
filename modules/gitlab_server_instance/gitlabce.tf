@@ -1,8 +1,3 @@
-resource "google_service_account" "gitlab-ce" {
-    account_id   = "gitlab-ce"
-    display_name = "gitlab-ce"
-}
-
 resource "google_compute_instance" "compute_instance" {
     count = "${var.deploy_gitlab ? 1 : 0}"
     name = "${var.prefix}${var.instance_name}"
@@ -103,6 +98,6 @@ data "template_file" "runner_host" {
     vars {
       runner_host = "${var.runner_host}"
       #generated_host = "http${var.ssl_certificate != "/dev/null" ? "s" : ""}://${var.dns_name}"
-       generated_host = "http://${module.gitlab_instance.internal_ip}"
+       generated_host = "http://${google_compute_instance.compute_instance.internal_ip}"
     }
 }

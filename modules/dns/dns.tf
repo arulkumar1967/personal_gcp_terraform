@@ -13,5 +13,5 @@ resource "google_dns_record_set" "dns_record_set" {
     # TODO: This is really hard to read. I'd like to revisit at some point to clean it up.
     # But we shouldn't need two variables to specify DNS name
     managed_zone = "${google_dns_managed_zone.dns_managed_zone.name}"
-    rrdatas = ["${var.server_nat_ip}}"]
+    rrdatas = ["${var.server_ip}}"]
 }
