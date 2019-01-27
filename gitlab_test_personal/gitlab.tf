@@ -62,7 +62,7 @@ module "mydns" {
 #}
 
 output "address" {
-    value = "${module.gitlab_server.gitlab_server_instance.address}"
+    value = "${module.gitlab_server.address}"
 }
 
 output "runner_host" {

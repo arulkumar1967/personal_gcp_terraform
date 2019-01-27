@@ -1,39 +1,55 @@
 
+resource "google_compute_instance" "gitlab-ci-runner" {
+    #count = "${var.runner_count}"
+    name = "${var.prefix}gitlab-ci-runner-vm"
+    machine_type = "${var.runner_machine_type}"
+    zone = "${var.zone}"
 
-module "gitlab_runner" {
-  source = "../compute_instance"
-  project = "${var.project}"
-  region = "${var.region}"
-  zone = "${var.zone}"
-  data_volume = "${var.dns_volume}"
-  dns_name = "${var.dns_name}"
-  dns_zone = "${var.dns_zone}"
-  runner_count = "${var.runner_count}"
-  prefix = "${var.prefix}"
-  initial_root_password = "${var.initial_root_password}"
-  runner_token = "${var.runner_token}"
-  runner_host = "${var.runner_host}"
-  instance_name = "${var.instance_name}"
-  service_account_email = "${var.service_account_email}"
+    tags = ["gitlab-ci-runner"]
 
-  provisioner "file" {
-      source = "${path.module}/bootstrap_runner"
-      destination = "/tmp/bootstrap_runner"
-  }
+    network_interface {
+        network = "${var.network}"
+        access_config {
+          // Ephemeral IP
+        }
+    }
 
-  provisioner "remote-exec" {
+    metadata {
+        sshKeys = "ubuntu:${file("${var.ssh_key}.pub")}"
+    }
+
+    connection {
+        type = "ssh"
+        user = "ubuntu"
+        agent = "false"
+        private_key = "${file("${var.ssh_key}")}"
+    }
+
+    boot_disk {
+        initialize_params {
+            image = "${var.image}"
+            size = "${var.runner_disk_size}"
+        }
+    }
+
+    provisioner "file" {
+        source = "${path.module}/bootstrap_runner"
+        destination = "/tmp/bootstrap_runner"
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /tmp/bootstrap_runner",
+            "sudo /tmp/bootstrap_runner ${var.instance_name} ${var.runner_host} ${var.runner_token} ${var.runner_image}}"
+        ]
+    }
+
+    provisioner "remote-exec" {
+      when = "destroy"
       inline = [
-          "chmod +x /tmp/bootstrap_runner",
-          "sudo /tmp/bootstrap_runner ${var.instance_name} ${var.runner_host} ${var.runner_token} ${var.runner_image}}"
+        "sudo gitlab-ci-multi-runner unregister --name ${var.instance_name}"
       ]
-  }
 
-  provisioner "remote-exec" {
-    when = "destroy"
-    inline = [
-      "sudo gitlab-ci-multi-runner unregister --name ${var.instance_name}"
-    ]
-
-  }
+    }
 
 }
