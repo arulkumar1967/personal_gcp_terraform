@@ -16,7 +16,7 @@ module "gitlab_server" {
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
-  instance_name = "gitlab_server"
+  instance_name = "gitlab-server"
   data_volume = "gitlab-disk"
   dns_name = "gitlabpoc.example.com"
   runner_count = 2
@@ -33,7 +33,7 @@ module "gitlab_runner" {
   project = "terraformpoc-229221"
   region = "europe-west2"
   zone = "europe-west2-c"
-  instance_name = "gitlab_runner"
+  instance_name = "gitlab-runner"
   data_volume = "gitlab-disk"
   dns_name = "gitlabpoc.example.com"
   runner_count = 2
@@ -52,7 +52,7 @@ module "mydns" {
   region = "europe-west2"
   zone = "europe-west2-c"
   dns_name = "gitlabpoc.example.com"
-  dns_zone = "gitlabpoc.example"
+  dns_zone = "gitlabpoc"
   server_ip = "${module.gitlab_server.address}"
   //{google_compute_instance.gitlab-ce.network_interface.0.access_config.0.assigned_nat_ip
 }
