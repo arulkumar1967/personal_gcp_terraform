@@ -58,7 +58,7 @@ module "mydns" {
   zone = "europe-west2-c"
   dns_name = "gitlabpoc.example.com"
   dns_zone = "gitlabpoc.example"
-  server_ip = "${module.mygitlab.address}"
+  server_ip = "${module.gitlab_server.address}"
   //{google_compute_instance.gitlab-ce.network_interface.0.access_config.0.assigned_nat_ip
 }
 
@@ -75,7 +75,7 @@ output "gitlab-ce-service-account" {
 }
 
 output "address" {
-    value = "${module.mygitlab.gitlab_server.address}"
+    value = "${module.gitlab_server.gitlab_server.address}"
 }
 
 output "runner_host" {

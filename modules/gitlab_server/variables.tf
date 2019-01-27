@@ -101,8 +101,7 @@ variable "runner_count" {
 }
 
 variable "runner_host" {
-    description = "URL of the GitLab server Runner will register with"
-    default = "GENERATE"
+    description = "URL of the GitLab server Runner will register with"    
 }
 
 variable "runner_token" {
