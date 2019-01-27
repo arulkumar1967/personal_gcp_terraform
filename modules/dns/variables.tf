@@ -24,4 +24,8 @@ variable "dns_zone" {
     description = "The name of the DNS zone in Google Cloud that the DNS name should go under"
 }
 
+variable "server_ip" {
+    description = "Server IP address to create A records"
+}
+
 

@@ -130,3 +130,9 @@ variable "runner_machine_type" {
 variable "dns_name" {
     description = "The DNS name of the GitLab instance."
 }
+
+variable "service_account_email" {
+    description = "The Service account email"
+  
+}
+
