@@ -7,7 +7,7 @@ terraform {
 }
 
 module "gitlab_service_account" {  
-  source = "../modules/service_account"
+  source = "../modules/service-account"
   project_id = "terraformpoc-229221"
   prefix = "test"
   service_name = "gitlab-instance"
@@ -38,7 +38,7 @@ module "gitlab_server" {
   initial_root_password = "K00uYFxohPBIdMLMDqEX"
   runner_token = "Nur19iz5KCG2ZzWW6_tr"
   runner_host = "http://londonuk.etouch.net."
-  service_account_email = "{$module.service_account.gcp_service_account.value}"
+  service_account_email = "{$module.gitlab_service_account.gcp_service_account.value}"
   //google_service_account.gitlab-ci-runner.email
 }
 
@@ -54,7 +54,7 @@ module "gitlab_runner" {
   initial_root_password = "K00uYFxohPBIdMLMDqEX"
   runner_token = "Nur19iz5KCG2ZzWW6_tr"
   runner_host = "http://londonuk.etouch.net."
-  service_account_email = "{$module.service_account.gcp_service_account.value}"
+  service_account_email = "{$module.gitlab_service_account.gcp_service_account.value}"
   //google_service_account.gitlab-ci-runner.email
 }
 
