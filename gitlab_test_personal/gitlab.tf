@@ -40,7 +40,7 @@ module "gitlab_runner" {
   prefix = "test"
   initial_root_password = "K00uYFxohPBIdMLMDqEX"
   runner_token = "Nur19iz5KCG2ZzWW6_tr"
-  runner_host = "http://londonuk.etouch.net."
+  runner_host = "GENERATE"
   service_account_email = "{$module.gitlab_service_account.gcp_service_account.value}"
   //google_service_account.gitlab-ci-runner.email
 }
